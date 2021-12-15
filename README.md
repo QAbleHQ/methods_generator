@@ -1,0 +1,1 @@
+# object_repository_generator
