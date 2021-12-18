@@ -3,10 +3,7 @@ package io.unity;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.json.simple.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 public class class_builder {
@@ -18,11 +15,11 @@ public class class_builder {
 
         java_class.setPackage("io.unity.object_repository.Web.login").setName(className);
 
-        java_class.addImport("io.unity.framework.readers.locator_reader;");
-        java_class.addImport("io.unity.autoweb.Element;");
-        java_class.addImport("io.unity.autoweb.Verify;");
-        java_class.addImport("org.openqa.selenium.WebDriver;");
-        java_class.addImport("org.testng.Assert;");
+        java_class.addImport("io.unity.framework.readers.locator_reader");
+        java_class.addImport("io.unity.autoweb.Element");
+        java_class.addImport("io.unity.autoweb.Verify");
+        java_class.addImport("org.openqa.selenium.WebDriver");
+        java_class.addImport("org.testng.Assert");
 
 
 
@@ -43,11 +40,11 @@ public class class_builder {
 
         Set<String> keys = locator_file_object.keySet();
 
-        Iterator value = keys.iterator();
+        Iterator<String> value = keys.iterator();
 
 
         while (value.hasNext()) {
-            String key_name = (String) value.next();
+            String key_name =  value.next();
             JSONObject single_object = (JSONObject) locator_file_object.get(key_name);
             identifier.identify_locator_and_generate_object(key_name, single_object);
 
