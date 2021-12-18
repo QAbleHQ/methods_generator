@@ -35,5 +35,13 @@ public class create_class_object {
                 .setLiteralInitializer("null");
     }
 
+    public void create_locator_reader_class_object()
+    {
+        javaClass.addField()
+                .setName("reader")
+                .setType("locator_reader")
+                .setLiteralInitializer("new locator_reader()");
+    }
+
 
 }
