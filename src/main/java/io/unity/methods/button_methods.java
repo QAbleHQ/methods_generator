@@ -15,8 +15,10 @@ public class button_methods {
 
     public void verify_button_is_present(String key_name)
     {
-        java_class.addMethod().setName("verify_"+key_name+"_text_box_is_present_on_page").setBody("verify.element_is_present(reader.get_locator_value(\""+key_name+"\"));");
+        java_class.addMethod().setName("verify_"+key_name+"_button_is_present_on_page").setBody("verify.element_is_present(reader.get_locator_value(\""+key_name+"\"));");
     }
+
+
 
 
 

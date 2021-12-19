@@ -27,7 +27,7 @@ public class object_generator {
                     "\n" +
                     "  \"password\" : {\n" +
                     "    \"platform\" : \"web\",\n" +
-                    "    \"element_type\" : \"password\",\n" +
+                    "    \"element_type\" : \"button\",\n" +
                     "    \"locator_type\" : \"xpath\",\n" +
                     "    \"locator_value\" : \"//input[@name='pwd']\",\n" +
                     "    \"objectGenerate\" : \"generate\"\n" +

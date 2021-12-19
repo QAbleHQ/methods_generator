@@ -13,13 +13,13 @@ public class text_box_methods {
 
     public void enter_text(String key_name)
     {
-        java_class.addMethod().setName("enter_text_at_"+key_name+"_text_box").setBody("element.find(reader.get_locator_value(\""+key_name+"\")).sendKeys(text_to_enter);").setParameters("String text_to_enter");
+        java_class.addMethod().setName("enter_text_at_"+key_name+"_text_box").setBody("element.enter_text(\""+key_name+"\",text_to_enter);").setParameters("String text_to_enter");
 
     }
 
     public void clear_text_box(String key_name)
     {
-        java_class.addMethod().setName("clear_text_from_"+key_name+"_text_box").setBody("element.find(reader.get_locator_value(\""+key_name+"\")).clear();");
+        java_class.addMethod().setName("clear_text_from_"+key_name+"_text_box").setBody("element.clear_text_field(\""+key_name+"\");\n");
 
     }
 

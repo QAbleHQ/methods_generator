@@ -1,5 +1,6 @@
 package io.unity;
 
+import io.unity.methods.button_methods;
 import io.unity.methods.text_box_methods;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.json.simple.JSONObject;
@@ -16,6 +17,7 @@ public class locator_identifier {
     public void identify_locator_and_generate_object(String key_name, JSONObject single_object) {
 
         text_box_methods text_box_method = new text_box_methods(java_class);
+        button_methods button_methods = new button_methods(java_class);
 
         String element_type = (String) single_object.get("element_type");
         if (element_type.equals("text_box")) {
@@ -30,7 +32,7 @@ public class locator_identifier {
         } else if (element_type.equals("password")) {
 
         } else if (element_type.equals("button")) {
-
+            button_methods.verify_button_is_present(key_name);
 
         } else if (element_type.equals("check_box")) {
 
