@@ -6,7 +6,7 @@ public class create_class_object {
 
     JavaClassSource javaClass;
 
-    create_class_object(JavaClassSource javaClass) {
+  public create_class_object(JavaClassSource javaClass) {
         this.javaClass = javaClass;
     }
 
