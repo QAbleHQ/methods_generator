@@ -4,9 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>groupId</groupId>
+    <groupId>unity</groupId>
     <artifactId>object_repository_generator</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1</version>
+
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub QAbleHQ Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/qablehq/object_repository_generator</url>
+        </repository>
+    </distributionManagement>
+
 
 
     <properties>

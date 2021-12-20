@@ -12,31 +12,11 @@ import java.util.Scanner;
 public class object_generator {
 
 
-    public static void main(String[] args) {
+    public void generate() {
         class_builder builder = new class_builder();
 
         JSONParser parser = new JSONParser();
         try {
-            JSONObject jsonObject = (JSONObject) parser.parse("{\n" +
-                    "\"email\" : {\n" +
-                    "  \"platform\" : \"web\",\n" +
-                    "  \"element_type\" : \"text_box\",\n" +
-                    "  \"locator_type\" : \"xpath\",\n" +
-                    "  \"locator_value\" : \"//input[@name='email']\",\n" +
-                    "  \"objectGenerate\" : \"generate\"\n" +
-                    "},\n" +
-                    "\n" +
-                    "  \"password\" : {\n" +
-                    "    \"platform\" : \"web\",\n" +
-                    "    \"element_type\" : \"button\",\n" +
-                    "    \"locator_type\" : \"xpath\",\n" +
-                    "    \"locator_value\" : \"//input[@name='pwd']\",\n" +
-                    "    \"objectGenerate\" : \"generate\"\n" +
-                    "  }\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "}");
 
 
             Scanner scanner = new Scanner(System.in);
@@ -52,7 +32,7 @@ public class object_generator {
 
             builder.write_java_file(desination_path,java_class);
 
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
