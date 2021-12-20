@@ -7,6 +7,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class object_generator {
 
@@ -16,7 +17,7 @@ public class object_generator {
 
         JSONParser parser = new JSONParser();
         try {
-           JSONObject jsonObject = (JSONObject) parser.parse("{\n" +
+            JSONObject jsonObject = (JSONObject) parser.parse("{\n" +
                     "\"email\" : {\n" +
                     "  \"platform\" : \"web\",\n" +
                     "  \"element_type\" : \"text_box\",\n" +
@@ -37,8 +38,19 @@ public class object_generator {
                     "\n" +
                     "}");
 
-            builder.build_object_repo_class("Testing","Testing",jsonObject);
 
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter Locator File Path");
+
+            String file_path = scanner.nextLine();
+
+            System.out.println("Enter The destination path");
+            String desination_path = scanner.nextLine();
+
+
+            JavaClassSource java_class = builder.build_object_repo_class("Testing", builder.read_locator_file_and_get_object(file_path));
+
+            builder.write_java_file(desination_path,java_class);
 
         } catch (ParseException e) {
             e.printStackTrace();

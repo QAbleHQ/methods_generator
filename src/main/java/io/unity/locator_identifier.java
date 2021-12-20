@@ -5,6 +5,10 @@ import io.unity.methods.text_box_methods;
 import io.unity.methods.text_methods;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class locator_identifier {
 
@@ -13,6 +17,7 @@ public class locator_identifier {
     locator_identifier(JavaClassSource java_class) {
         this.java_class = java_class;
     }
+
 
 
     public void identify_locator_and_generate_object(String key_name, JSONObject single_object) {
@@ -38,10 +43,24 @@ public class locator_identifier {
             text_box_method.verify_text_box_is_present(key_name);
             text_box_method.clear_and_enter_text_box(key_name);
 
-            /*
+            /* TODO()
             * Add Some Email Related Methods
             * */
+
+
         } else if (element_type.equals("password")) {
+            /*
+             * Common Methods of the text Box
+             * */
+            text_box_method.enter_text(key_name);
+            text_box_method.clear_text_box(key_name);
+            text_box_method.verify_text_box_is_present(key_name);
+            text_box_method.clear_and_enter_text_box(key_name);
+
+            /* TODO()
+             * Add Some Password Related Methods
+             * */
+
 
         } else if (element_type.equals("button")) {
             button_methods.verify_button_is_present();
