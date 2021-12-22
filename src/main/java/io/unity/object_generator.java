@@ -11,7 +11,10 @@ import java.util.Scanner;
 
 public class object_generator {
 
-
+    public static void main(String[] args) {
+        object_generator generator = new object_generator();
+        generator.generate();
+    }
     public void generate() {
         class_builder builder = new class_builder();
 

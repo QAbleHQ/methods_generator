@@ -14,20 +14,20 @@ public class button_methods {
     }
 
     public void verify_button_is_present() {
-        java_class.addMethod().setName("verify_" + key_name + "_button_is_present_on_page").setBody(" Assert.assertTrue(verify.element_is_present(\"" + key_name + "\"));").setPublic();
+        java_class.addMethod().setName("verify_" + key_name + "_is_present_on_page").setBody(" Assert.assertTrue(verify.element_is_present(\"" + key_name + "\"));").setPublic();
     }
 
     public void verify_button_is_clickable() {
-        java_class.addMethod().setName("verify_" + key_name + "_button_is_clickable").setBody("Assert.assertTrue(verify.element_is_enable(\"" + key_name + "\"));").setPublic();
+        java_class.addMethod().setName("verify_" + key_name + "_is_clickable").setBody("Assert.assertTrue(verify.element_is_enable(\"" + key_name + "\"));").setPublic();
     }
 
     public void click_on_button() {
-        java_class.addMethod().setName("click_on_" + key_name + "_button").setBody("element.click(\"" + key_name + "\");").setPublic();
+        java_class.addMethod().setName("click_on_" + key_name ).setBody("element.click(\"" + key_name + "\");").setPublic();
     }
 
     public void verify_button_text()
     {
-        java_class.addMethod().setName("click_on_" + key_name + "_button").setBody("verify.element_text_is_equal_to(\""+key_name+"\",button_text);").setParameters("String button_text").setPublic();
+        java_class.addMethod().setName("click_on_" + key_name ).setBody("verify.element_text_is_equal_to(\""+key_name+"\",button_text);").setParameters("String button_text").setPublic();
     }
 
 
