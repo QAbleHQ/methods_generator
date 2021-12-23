@@ -8,7 +8,7 @@ public class button_methods {
     JavaClassSource java_class;
     String key_name;
 
-    public button_methods(JavaClassSource java_class,String key_name) {
+    public button_methods(JavaClassSource java_class, String key_name) {
         this.java_class = java_class;
         this.key_name = key_name;
     }
@@ -22,12 +22,11 @@ public class button_methods {
     }
 
     public void click_on_button() {
-        java_class.addMethod().setName("click_on_" + key_name ).setBody("element.click(\"" + key_name + "\");").setPublic();
+        java_class.addMethod().setName("click_on_" + key_name).setBody("element.click(\"" + key_name + "\");").setPublic();
     }
 
-    public void verify_button_text()
-    {
-        java_class.addMethod().setName("click_on_" + key_name ).setBody("verify.element_text_is_equal_to(\""+key_name+"\",button_text);").setParameters("String button_text").setPublic();
+    public void verify_button_text() {
+        java_class.addMethod().setName("Verify_" + key_name + "_text_is_equal_to").setBody("verify.element_text_is_equal_to(\"" + key_name + "\",button_text);").setParameters("String button_text").setPublic();
     }
 
 
