@@ -31,12 +31,13 @@ public class class_builder {
     }
 
 
-    public JavaClassSource build_object_repo_class(String className, JSONObject locator_file_object) {
+    public JavaClassSource build_object_repo_class(String destination_path, String className, JSONObject locator_file_object) {
 
 
         final JavaClassSource java_class = Roaster.create(JavaClassSource.class);
 
-        java_class.setPackage("io.unity.object_repository.Web.login").setName(className);
+        java_class.setPackage(get_package_name(destination_path)).setName(className);
+
 
         java_class.addImport("io.unity.framework.readers.locator_reader");
         java_class.addImport("io.unity.autoweb.Element");
@@ -81,6 +82,13 @@ public class class_builder {
             System.out.println(e);
         }
         System.out.println("Java File Generated SuccessFully...");
+    }
+
+    public String get_package_name(String destination_path) {
+
+        String pacakge_path[] = destination_path.split("/");
+        return "web.object_repository." + pacakge_path[pacakge_path.length - 1];
+
     }
 }
 
