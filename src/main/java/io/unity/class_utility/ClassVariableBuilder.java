@@ -1,12 +1,12 @@
-package io.unity;
+package io.unity.class_utility;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-public class create_class_object {
+public class ClassVariableBuilder {
 
     JavaClassSource javaClass;
 
-  public create_class_object(JavaClassSource javaClass) {
+  public ClassVariableBuilder(JavaClassSource javaClass) {
         this.javaClass = javaClass;
     }
 

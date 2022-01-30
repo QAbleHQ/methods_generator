@@ -1,32 +1,30 @@
-package io.unity;
+package io.unity.discard;
 
-import io.unity.methods.button_methods;
-import io.unity.methods.text_box_methods;
-import io.unity.methods.text_methods;
+import io.unity.methods.ButtonMethods;
+import io.unity.methods.TextBoxMethods;
+import io.unity.methods.TextMethods;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-public class locator_identifier {
+public class LocatorIdentifier {
 
     JavaClassSource java_class;
 
-    locator_identifier(JavaClassSource java_class) {
+    public LocatorIdentifier(JavaClassSource java_class) {
         this.java_class = java_class;
     }
 
 
 
-    public void identify_locator_and_generate_object(String key_name, JSONObject single_object) {
+    public void identify_locator_and_generate_methods(String key_name, JSONObject single_object) {
 
-        text_box_methods text_box_method = new text_box_methods(java_class);
-        button_methods button_methods = new button_methods(java_class, key_name);
-        text_methods text_methods = new text_methods(java_class, key_name);
+        TextBoxMethods text_box_method = new TextBoxMethods(java_class);
+        ButtonMethods button_methods = new ButtonMethods(java_class, key_name);
+        TextMethods text_methods = new TextMethods(java_class, key_name);
 
         String element_type = (String) single_object.get("element_type");
+
+
         if (element_type.equals("text_box")) {
 
             text_box_method.enter_text(key_name);
@@ -89,6 +87,10 @@ public class locator_identifier {
 
 
     }
+
+
+
+
 
 
 }
