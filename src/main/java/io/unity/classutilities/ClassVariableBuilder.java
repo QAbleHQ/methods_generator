@@ -1,18 +1,19 @@
-package io.unity;
+package io.unity.classutilities;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.pmw.tinylog.Logger;
 
-public class create_class_object {
+public class ClassVariableBuilder {
 
     JavaClassSource javaClass;
 
-  public create_class_object(JavaClassSource javaClass) {
+    public ClassVariableBuilder(JavaClassSource javaClass) {
         this.javaClass = javaClass;
     }
 
 
     public void create_driver_class_variable() {
-
+        Logger.info("Adding WebDriver Class variable");
         javaClass.addField()
                 .setName("driver")
                 .setType("WebDriver")
@@ -20,7 +21,7 @@ public class create_class_object {
     }
 
     public void create_element_class_variable() {
-
+        Logger.info("Adding Element Class variable");
         javaClass.addField()
                 .setName("element")
                 .setType("Element")
@@ -28,20 +29,13 @@ public class create_class_object {
     }
 
     public void create_verify_class_variable() {
-
+        Logger.info("Adding Verify Class variable");
         javaClass.addField()
                 .setName("verify")
                 .setType("Verify")
                 .setLiteralInitializer("null");
     }
 
-    public void create_locator_reader_class_object()
-    {
-        javaClass.addField()
-                .setName("reader")
-                .setType("locator_reader")
-                .setLiteralInitializer("new locator_reader()");
-    }
 
 
 }
