@@ -97,7 +97,7 @@ public class ClassSkeleton {
         if (temp != null) {
             System.out.println("File renamed and moved successfully");
         } else {
-            System.out.println("Failed to move the file");
+            
         }
     }
 
