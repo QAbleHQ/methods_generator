@@ -1,11 +1,11 @@
-package io.unity.class_utility;
+package io.unity.classutilities;
 
-import io.unity.methods.MethodsData;
 import io.unity.methods.LocatorType;
+import io.unity.methods.MethodsData;
 import org.apache.commons.io.FilenameUtils;
-import org.assertj.core.util.Maps;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.pmw.tinylog.Logger;
 
 import java.io.File;
 import java.io.FileReader;
@@ -31,13 +31,25 @@ public class ClassMethodsValidator {
         validator.prepare_list_of_element_not_generated("/Users/viralpatel/Viral/object_repository_generator/src/test/java/web/object_repository/login_page/registration/search_page.json", "web.object_repository.login_page.registration.search_page_steps");
     }
 
+    public static void deleteDirectory(File file) {
+
+        try {
+            for (File subfile : file.listFiles()) {
+                if (subfile.isDirectory()) {
+                    deleteDirectory(subfile);
+                }
+                subfile.delete();
+            }
+        } catch (Exception e) {
+        }
+    }
+
     public List look_for_locator_json_file(String folder_path) {
         File dir = new File(folder_path);
 
         FilenameFilter filter = new FilenameFilter() {
             @Override
             public boolean accept(File f, String name) {
-                // We want to find only .c files
                 return name.endsWith(".json");
             }
         };
@@ -47,8 +59,6 @@ public class ClassMethodsValidator {
             // We want to find only regular files
             result = walk.filter(Files::isRegularFile).filter(p -> p.getFileName().toString().endsWith(".json"))
                     .map(x -> x.toString()).collect(Collectors.toList());
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,14 +73,13 @@ public class ClassMethodsValidator {
 
     public String create_java_class_name_without_extension(String json_file_path) {
         File file = new File(json_file_path);
-        String java_class_file_path = FilenameUtils.removeExtension(file.getName()) ;
+        String java_class_file_path = FilenameUtils.removeExtension(file.getName());
         return java_class_file_path;
     }
 
     public boolean check_java_class_is_exist(String file_path) {
         return new File(file_path).exists();
     }
-
 
     public Map prepare_list_of_element_not_generated(String json_file_path, String java_class_name) {
         Map pending_method_list = new HashMap();
@@ -91,17 +100,18 @@ public class ClassMethodsValidator {
                 String locator_name = (String) iterator.next();
                 String locator_type = ((JSONObject) whole_file.get(locator_name)).get("element_type").toString();
 
+                Logger.info("Checking for missing methods for locator : " + locator_name);
+
                 pending_method_list.put(locator_name, prepare_unavailable_method_tag_list(locator_type, java_class_name, locator_name));
+
             }
 
-            System.out.println(pending_method_list);
-            //        System.out.println(current_method_available_status);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return pending_method_list;
     }
-
 
     public List prepare_unavailable_method_tag_list(String locator_type, String java_class_name, String locator_name) {
 
@@ -115,7 +125,7 @@ public class ClassMethodsValidator {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Method m[] = cls.getMethods();
+        Method[] m = cls.getMethods();
 
         ArrayList expected_method_tag_list = new ArrayList();
 
@@ -134,10 +144,15 @@ public class ClassMethodsValidator {
                 .filter(Predicate.not(new HashSet<>(available_method_tag)::contains))
                 .collect(Collectors.toList());
 
+        if (result.size() >= 0) {
+            Logger.info("----- > No missing Method for locator" + locator_name);
 
+        } else {
+            Logger.info("Missing Method for " + locator_name + " are :" + result);
+
+        }
         return result;
     }
-
 
     public Class look_up_class(String locator_type_name) throws ClassNotFoundException {
         Class cls = null;
@@ -181,7 +196,6 @@ public class ClassMethodsValidator {
         return cls;
     }
 
-
     public ArrayList prepare_list_of_available_methods_for_single_locator(String java_class_name, String locator_name) {
         Class cls = null;
         try {
@@ -189,7 +203,7 @@ public class ClassMethodsValidator {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Method m[] = cls.getMethods();
+        Method[] m = cls.getMethods();
 
         ArrayList method_tag_list = new ArrayList();
 
@@ -205,11 +219,6 @@ public class ClassMethodsValidator {
 
         return method_tag_list;
     }
-
-    public void prepare_list_of_method_available_in_class() {
-
-    }
-
 
     public void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation) {
         try {
@@ -233,17 +242,5 @@ public class ClassMethodsValidator {
         }
     }
 
-    public static void deleteDirectory(File file) {
-
-        try {
-            for (File subfile : file.listFiles()) {
-                if (subfile.isDirectory()) {
-                    deleteDirectory(subfile);
-                }
-                subfile.delete();
-            }
-        } catch (Exception e) {
-        }
-    }
 
 }

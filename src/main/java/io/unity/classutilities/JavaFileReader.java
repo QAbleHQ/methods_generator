@@ -1,4 +1,4 @@
-package io.unity;
+package io.unity.classutilities;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

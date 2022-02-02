@@ -1,9 +1,14 @@
 package io.unity;
 
-import io.unity.class_utility.ClassMethodsValidator;
+import io.unity.classutilities.ClassMethodsValidator;
+import io.unity.classutilities.ClassSkeleton;
+import io.unity.classutilities.GenerateMethods;
+import io.unity.classutilities.JavaFileReader;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.json.simple.parser.JSONParser;
+import org.pmw.tinylog.Configurator;
+import org.pmw.tinylog.Logger;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,13 +16,15 @@ import java.util.Scanner;
 public class EntryPoint {
 
     public static void main(String[] args) {
+        Configurator.currentConfig()
+                .formatPattern("{level}:{message}")
+                .activate();
         EntryPoint generator = new EntryPoint();
         generator.generate();
-        //    System.out.println(  generator.check_java_class_is_exist(generator.create_java_class_name("/Users/viralpatel/Viral/object_repository_generator/src/test/java/web/object_repository/login_page/search_page.json")));
     }
 
     public void generate() {
-        ClassBuilder builder = new ClassBuilder();
+
         ClassMethodsValidator validator = new ClassMethodsValidator();
         GenerateMethods methods = null;
         JavaFileReader file_reader = new JavaFileReader();
@@ -25,36 +32,48 @@ public class EntryPoint {
         JSONParser parser = new JSONParser();
         try {
 
-
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter Locator file folder");
-
+            Logger.info("Enter Locator file folder");
             String file_path = scanner.nextLine();
 
             List<String> total_files = validator.look_for_locator_json_file(file_path);
+            Logger.info("Total Files Found inside the Folder : " + total_files.size());
 
-            for (String json_file_path : total_files) {
 
-                JavaClassSource javaClass = null;
-                ClassSkeleton skeleton = null;
-                String java_class_file_path = validator.create_java_class_file_path(json_file_path);
-                String only_class_name = validator.create_java_class_name_without_extension(json_file_path);
+            if (total_files.size() > 0) {
+                for (String json_file_path : total_files) {
+                    Logger.info("Picking file : " + json_file_path);
+                    JavaClassSource javaClass = null;
+                    ClassSkeleton skeleton = null;
+                    String java_class_file_path = validator.create_java_class_file_path(json_file_path);
+                    String only_class_name = validator.create_java_class_name_without_extension(json_file_path);
+                    Logger.info("Checking for the Class file is available or not");
+                    if (!validator.check_java_class_is_exist(java_class_file_path)) {
 
-                if (!validator.check_java_class_is_exist(java_class_file_path)) {
-                    javaClass = Roaster.create(JavaClassSource.class);
-                    skeleton = new ClassSkeleton(javaClass);
-                    skeleton.create_skeleton(file_path, only_class_name);
-                } else {
-                    javaClass =
-                            Roaster.parse(JavaClassSource.class, file_reader.read_java_file(java_class_file_path));
-                    skeleton = new ClassSkeleton(javaClass);
+                        Logger.info("Java Class is not available");
+                        javaClass = Roaster.create(JavaClassSource.class);
+                        skeleton = new ClassSkeleton(javaClass);
+                        Logger.info("Creating a Java class with the name :" + only_class_name);
+                        skeleton.create_skeleton(file_path, only_class_name);
+                        skeleton.write_java_file(java_class_file_path, javaClass);
+
+                    } else {
+                        Logger.info("Java Class is available" + only_class_name);
+                        Logger.info("Reading Java Class file");
+                        javaClass =
+                                Roaster.parse(JavaClassSource.class, file_reader.read_java_file(java_class_file_path));
+                        skeleton = new ClassSkeleton(javaClass);
+
+                    }
+
+                    methods = new GenerateMethods(javaClass);
+                    methods.generate_missing_methods(json_file_path, skeleton.get_package_name(file_path) + "." + only_class_name);
+                    skeleton.write_java_file(java_class_file_path, javaClass);
+
+
                 }
-
-                methods = new GenerateMethods(javaClass);
-
-                methods.generate_missing_methods(json_file_path, skeleton.get_package_name(file_path) + "." + only_class_name);
-
-                skeleton.write_java_file(java_class_file_path, javaClass);
+            } else {
+                Logger.info("Enter the Folder which has the .json file ");
 
             }
 
