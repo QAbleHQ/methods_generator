@@ -1,4 +1,4 @@
-package io.unity;
+package io.unity.MethodGenerator;
 
 import io.unity.classutilities.ClassMethodsValidator;
 import io.unity.classutilities.ClassSkeleton;
@@ -42,6 +42,7 @@ public class EntryPoint {
 
             if (total_files.size() > 0) {
                 for (String json_file_path : total_files) {
+
                     Logger.info("Picking file : " + json_file_path);
                     JavaClassSource javaClass = null;
                     ClassSkeleton skeleton = null;
@@ -66,9 +67,9 @@ public class EntryPoint {
 
                     }
 
-                    methods = new GenerateMethods(javaClass);
-                    methods.generate_missing_methods(json_file_path, skeleton.get_package_name(file_path) + "." + only_class_name);
-                    skeleton.write_java_file(java_class_file_path, javaClass);
+             //       methods = new GenerateMethods(javaClass);
+               //     methods.generate_missing_methods(json_file_path, skeleton.get_package_name(file_path) + "." + only_class_name);
+               //     skeleton.write_java_file(java_class_file_path, javaClass);
 
 
                 }

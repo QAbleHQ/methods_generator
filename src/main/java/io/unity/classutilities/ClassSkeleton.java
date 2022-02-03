@@ -5,6 +5,7 @@ import org.pmw.tinylog.Logger;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -60,8 +61,8 @@ public class ClassSkeleton {
             FileWriter fw = new FileWriter(destination_path);
             fw.write(java_class.toString());
             fw.close();
-
         } catch (Exception e) {
+            e.printStackTrace();
             Logger.error(e);
         }
 
@@ -69,7 +70,7 @@ public class ClassSkeleton {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         int result = compiler.run(null, null, null,
                 destination_path);
-
+        System.out.println("=================" +result);
         move_file(destination_path);
     }
 
@@ -78,7 +79,13 @@ public class ClassSkeleton {
         String source_class_file = java_file.replace(".java", ".class");
         String destination_file_path = source_class_file.replace("/src/test/java", "/target/test-classes");
 
-
+        try {
+            while (!new File(source_class_file).exists()) {
+                Thread.sleep(4000);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Path temp = null;
         try {
             temp = Files.move
@@ -97,7 +104,7 @@ public class ClassSkeleton {
         if (temp != null) {
             System.out.println("File renamed and moved successfully");
         } else {
-            
+
         }
     }
 
