@@ -1,15 +1,20 @@
 package io.unity.methods;
 
 public class LocatorType {
-    public static final String button = "io.unity.methods.ButtonMethods";
-    public static final String text_box = "io.unity.methods.TextBoxMethods";
-    public static final String link = "";
-    public static final String check_box = "";
-    public static final String text = "io.unity.methods.TextMethods";
-    public static final String email = "";
-    public static final String password = "";
-    public static final String radio = "";
-    public static final String text_area = "io.unity.methods.TextAreaMethods";
-    public static final String drop_down = "";
-    public static final String file = "";
+
+    LocatorType()
+    {
+
+    }
+    public static final String BUTTON = "io.unity.methods.ButtonMethods";
+    public static final String TEXT_BOX = "io.unity.methods.TextBoxMethods";
+    public static final String LINK = "io.unity.methods.LinkMethods";
+    public static final String CHECK_BOX = "";
+    public static final String TEXT = "io.unity.methods.TextMethods";
+    public static final String EMAIL = "";
+    public static final String PASSWORD = "";
+    public static final String RADIO = "";
+    public static final String TEXT_AREA = "io.unity.methods.TextAreaMethods";
+    public static final String DROP_DOWN = "";
+    public static final String FILE = "";
 }

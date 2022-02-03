@@ -34,26 +34,12 @@ public class ClassMethodsValidator {
     public static void deleteDirectory(File file) {
 
         try {
-            for (File subfile : file.listFiles()) {
-                if (subfile.isDirectory()) {
-                    deleteDirectory(subfile);
-                }
-                subfile.delete();
-            }
+            Files.delete(Paths.get(file.getAbsolutePath()));
         } catch (Exception e) {
         }
     }
 
-    public List look_for_locator_json_file(String folder_path) {
-        File dir = new File(folder_path);
-
-        FilenameFilter filter = new FilenameFilter() {
-            @Override
-            public boolean accept(File f, String name) {
-                return name.endsWith(".json");
-            }
-        };
-
+    public List<String> look_for_locator_json_file(String folder_path) {
         List<String> result = null;
         try (Stream<Path> walk = Files.walk(Paths.get(folder_path))) {
             // We want to find only regular files
@@ -81,14 +67,14 @@ public class ClassMethodsValidator {
         return new File(file_path).exists();
     }
 
-    public Map prepare_list_of_element_not_generated(String json_file_path, String java_class_name) {
-        Map pending_method_list = new HashMap();
+    public Map<String, List> prepare_list_of_element_not_generated(String json_file_path, String java_class_name) {
+        Map<String, List> pending_method_list = new HashMap<String, List>();
         try {
             JSONParser parser = new JSONParser();
             JSONObject whole_file = (JSONObject) parser.parse(new FileReader(json_file_path));
 
-            Set whole_file_set = whole_file.keySet();
-            Iterator iterator = whole_file_set.iterator();
+            Set<String> whole_file_set = whole_file.keySet();
+            Iterator<String> iterator = whole_file_set.iterator();
 
             Path targetPath = Paths.get(getClass().getResource("/").toURI()).getParent();
 
@@ -144,12 +130,10 @@ public class ClassMethodsValidator {
                 .filter(Predicate.not(new HashSet<>(available_method_tag)::contains))
                 .collect(Collectors.toList());
 
-        if (result.size() >= 0) {
+        if (result.isEmpty()) {
             Logger.info("----- > No missing Method for locator" + locator_name);
-
         } else {
             Logger.info("Missing Method for " + locator_name + " are :" + result);
-
         }
         return result;
     }
@@ -158,39 +142,39 @@ public class ClassMethodsValidator {
         Class cls = null;
 
         if (locator_type_name.equals("button")) {
-            cls = Class.forName(LocatorType.button);
+            cls = Class.forName(LocatorType.BUTTON);
         }
         if (locator_type_name.equals("link")) {
-            cls = Class.forName(LocatorType.link);
+            cls = Class.forName(LocatorType.LINK);
         }
         if (locator_type_name.equals("text_box")) {
-            cls = Class.forName(LocatorType.text_box);
+            cls = Class.forName(LocatorType.TEXT_BOX);
         }
         if (locator_type_name.equals("check_box")) {
-            cls = Class.forName(LocatorType.check_box);
+            cls = Class.forName(LocatorType.CHECK_BOX);
         }
         if (locator_type_name.equals("text")) {
-            cls = Class.forName(LocatorType.text);
+            cls = Class.forName(LocatorType.TEXT);
         }
         if (locator_type_name.equals("email")) {
-            cls = Class.forName(LocatorType.email);
+            cls = Class.forName(LocatorType.EMAIL);
         }
         if (locator_type_name.equals("password")) {
-            cls = Class.forName(LocatorType.password);
+            cls = Class.forName(LocatorType.PASSWORD);
         }
 
         if (locator_type_name.equals("radio")) {
-            cls = Class.forName(LocatorType.radio);
+            cls = Class.forName(LocatorType.RADIO);
         }
         if (locator_type_name.equals("text_area")) {
-            cls = Class.forName(LocatorType.text_area);
+            cls = Class.forName(LocatorType.TEXT_AREA);
         }
 
         if (locator_type_name.equals("drop_down")) {
-            cls = Class.forName(LocatorType.drop_down);
+            cls = Class.forName(LocatorType.DROP_DOWN);
         }
         if (locator_type_name.equals("file")) {
-            cls = Class.forName(LocatorType.file);
+            cls = Class.forName(LocatorType.FILE);
         }
 
         return cls;

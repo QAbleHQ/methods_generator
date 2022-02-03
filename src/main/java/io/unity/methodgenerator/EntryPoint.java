@@ -1,4 +1,4 @@
-package io.unity.MethodGenerator;
+package io.unity.methodgenerator;
 
 import io.unity.classutilities.ClassMethodsValidator;
 import io.unity.classutilities.ClassSkeleton;
@@ -6,7 +6,6 @@ import io.unity.classutilities.GenerateMethods;
 import io.unity.classutilities.JavaFileReader;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
-import org.json.simple.parser.JSONParser;
 import org.pmw.tinylog.Configurator;
 import org.pmw.tinylog.Logger;
 
@@ -29,7 +28,7 @@ public class EntryPoint {
         GenerateMethods methods = null;
         JavaFileReader file_reader = new JavaFileReader();
 
-        JSONParser parser = new JSONParser();
+
         try {
 
             Scanner scanner = new Scanner(System.in);
@@ -40,7 +39,7 @@ public class EntryPoint {
             Logger.info("Total Files Found inside the Folder : " + total_files.size());
 
 
-            if (total_files.size() > 0) {
+            if (!total_files.isEmpty()) {
                 for (String json_file_path : total_files) {
 
                     Logger.info("Picking file : " + json_file_path);
@@ -67,9 +66,9 @@ public class EntryPoint {
 
                     }
 
-             //       methods = new GenerateMethods(javaClass);
-               //     methods.generate_missing_methods(json_file_path, skeleton.get_package_name(file_path) + "." + only_class_name);
-               //     skeleton.write_java_file(java_class_file_path, javaClass);
+                    methods = new GenerateMethods(javaClass);
+                    methods.generate_missing_methods(json_file_path, skeleton.get_package_name(file_path) + "." + only_class_name);
+                    skeleton.write_java_file(java_class_file_path, javaClass);
 
 
                 }

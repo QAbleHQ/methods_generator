@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class GenerateMethods {
@@ -23,29 +23,28 @@ public class GenerateMethods {
         this.class_source = class_source;
     }
 
+
     public void generate_missing_methods(String json_file_path, String java_class_name) {
 
         Logger.info("adding Methods into " + java_class_name);
         ClassMethodsValidator validator = new ClassMethodsValidator();
 
-        Map<String, ArrayList> missing_method_locator_list = validator.prepare_list_of_element_not_generated(json_file_path, java_class_name);
+        Map<String, List> missing_method_locator_list = validator.prepare_list_of_element_not_generated(json_file_path, java_class_name);
         JSONParser parser = new JSONParser();
         JSONObject whole_file = null;
         try {
             whole_file = (JSONObject) parser.parse(new FileReader(json_file_path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 
-        for (Map.Entry<String, ArrayList> entry : missing_method_locator_list.entrySet()) {
+        for (Map.Entry<String, List> entry : missing_method_locator_list.entrySet()) {
 
             String locator_name = entry.getKey();
 
             String locator_type = ((JSONObject) whole_file.get(locator_name)).get("element_type").toString();
 
-            ArrayList<String> method_id_list = entry.getValue();
+            List<String> method_id_list = entry.getValue();
             Class cls = null;
             Object t = null;
             Constructor<?> cons = null;
@@ -53,18 +52,10 @@ public class GenerateMethods {
                 cls = validator.look_up_class(locator_type);
                 cons = cls.getConstructor(JavaClassSource.class, String.class);
                 t = cons.newInstance(class_source, locator_name);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                Logger.error(e);
             }
-            Method m[] = cls.getMethods();
+            Method[] m = cls.getMethods();
 
 
             for (int i = 0; i < m.length; i++) {
@@ -78,9 +69,7 @@ public class GenerateMethods {
                                 Logger.info("Adding methods with tag" + method_id);
 
                                 m[i].invoke(t);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            } catch (InvocationTargetException e) {
+                            } catch (IllegalAccessException | InvocationTargetException e) {
                                 e.printStackTrace();
                             }
 
