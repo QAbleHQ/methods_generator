@@ -183,6 +183,7 @@ public class ClassMethodsValidator {
     public ArrayList prepare_list_of_available_methods_for_single_locator(String java_class_name, String locator_name) {
         Class cls = null;
         try {
+            System.out.println("------------------"+java_class_name);
             cls = Class.forName(java_class_name);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

@@ -23,7 +23,7 @@ public class ClassSkeleton {
     }
 
     public String get_package_name(String destination_path) {
-        String package_path = destination_path.replace("/", ".");
+        String package_path = destination_path.replace("/", ".").replace("\\",".");
         return "web.object_repository" + package_path.split("web.object_repository")[1];
     }
 

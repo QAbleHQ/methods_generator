@@ -1,0 +1,70 @@
+{"email_label": {
+"platform": "web",
+"element_type": "text",
+"locator_type": "xpath",
+"locator_value": "//label[text()='Enter email address']"
+},
+"email_text_box": {
+"platform": "web",
+"element_type": "text_box",
+"locator_type": "xpath",
+"locator_value": "//input[@id='email']"
+},
+"password_label": {
+"platform": "web",
+"element_type": "text",
+"locator_type": "xpath",
+"locator_value": "//label[text()='Enter Password']"
+},
+"password_text_box": {
+"platform": "web",
+"element_type": "text",
+"locator_type": "xpath",
+"locator_value": "//input[@id='password']"
+},
+"enter_email_message": {
+"platform": "web",
+"element_type": "text",
+"locator_type": "xpath",
+"locator_value": "//span[text()='Please enter Email Address']"
+},
+"invalid_email_message": {
+"platform": "web",
+"element_type": "text",
+"locator_type": "xpath",
+"locator_value": "//span[text()='Please enter valid Email Address']"
+},
+"enter_password_message": {
+"platform": "web",
+"element_type": "text",
+"locator_type": "xpath",
+"locator_value": "//span[text()='Please enter Password']"
+},
+"invalid_password_message": {
+"platform": "web",
+"element_type": "text",
+"locator_type": "xpath",
+"locator_value": "//span[text()='Must be 8 characters or more']"
+},
+"forgot_password_link": {
+"platform": "web",
+"element_type": "button",
+"locator_type": "xpath",
+"locator_value": "//span[text()='Forgot Password?']"
+},
+"log_in_button": {
+"platform": "web",
+"element_type": "button",
+"locator_type": "xpath",
+"locator_value": "//div[text()='Log In']"
+},
+
+"sign_up_link": {
+"platform": "web",
+"element_type": "button",
+"locator_type": "xpath",
+"locator_value": "//span[text()='Sign Up.']"
+}
+
+
+}
