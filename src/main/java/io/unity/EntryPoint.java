@@ -16,15 +16,16 @@ import java.util.Scanner;
 public class EntryPoint {
 
     public static void main(String[] args) {
-        Configurator.currentConfig()
-                .formatPattern("{level}:{message}")
-                .activate();
+
         EntryPoint generator = new EntryPoint();
         generator.generate();
     }
 
     public void generate() {
 
+        Configurator.currentConfig()
+                .formatPattern("{level}:{message}")
+                .activate();
         ClassMethodsValidator validator = new ClassMethodsValidator();
         GenerateMethods methods = null;
         JavaFileReader file_reader = new JavaFileReader();
