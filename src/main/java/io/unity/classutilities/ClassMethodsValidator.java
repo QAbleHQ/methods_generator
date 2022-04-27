@@ -12,10 +12,7 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -67,7 +64,7 @@ public class ClassMethodsValidator {
 
     public String create_java_class_file_path(String json_file_path) {
         File file = new File(json_file_path);
-        String java_class_file_path = file.getParent() + "/" + FilenameUtils.removeExtension(file.getName()) + ".java";
+        String java_class_file_path = file.getParent() + FileSystems.getDefault().getSeparator() + FilenameUtils.removeExtension(file.getName()) + ".java";
         return java_class_file_path;
     }
 

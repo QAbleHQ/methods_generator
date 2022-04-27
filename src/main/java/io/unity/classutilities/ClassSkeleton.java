@@ -7,10 +7,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 public class ClassSkeleton {
 
@@ -21,7 +18,7 @@ public class ClassSkeleton {
     }
 
     public String get_package_name(String destination_path) {
-        String package_path = destination_path.replace("/", ".");
+        String package_path = destination_path.replace(FileSystems.getDefault().getSeparator() ,".");
         return "web.object_repository" + package_path.split("web.object_repository")[1];
     }
 
