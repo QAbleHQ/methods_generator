@@ -9,15 +9,32 @@
     <version>0.0.9</version>
 
 
+    <repositories>
+        <repository>
+            <id>my-repo1</id>
+            <name>your custom repo</name>
+            <url>https://download.testmanframework.com/artifactory/TestMan</url>
+        </repository>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
+    </repositories>
+
     <distributionManagement>
         <repository>
-            <id>github</id>
-            <name>GitHub QAbleHQ Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/qablehq/object_repository_generator</url>
+            <id>central</id>
+            <name>4c832183db03-releases</name>
+            <url>https://download.testmanframework.com/artifactory/TestMan</url>
         </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>4c832183db03-snapshots</name>
+            <url>https://download.testmanframework.com/artifactory/TestMan</url>
+        </snapshotRepository>
     </distributionManagement>
-
-
 
     <properties>
         <version.roaster>2.23.2.Final</version.roaster>
@@ -55,9 +72,9 @@
             <version>7.4.0</version>
         </dependency>
         <dependency>
-            <groupId>unity</groupId>
-            <artifactId>autoweb-core</artifactId>
-            <version>0.0.5.1</version>
+            <groupId>TestMan</groupId>
+            <artifactId>auto-core</artifactId>
+            <version>2.0.4</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.tinylog/tinylog -->
         <dependency>
