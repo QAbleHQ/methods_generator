@@ -1,4 +1,4 @@
-package io.unity;
+package io.unity.methodgenerator;
 
 import io.unity.classutilities.ClassMethodsValidator;
 import io.unity.classutilities.ClassSkeleton;

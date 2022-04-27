@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>unity</groupId>
-    <artifactId>object_repository_generator</artifactId>
-    <version>0.0.9</version>
+    <groupId>TestMan</groupId>
+    <artifactId>Method-Generator</artifactId>
+    <version>1.0.1</version>
 
 
     <repositories>
