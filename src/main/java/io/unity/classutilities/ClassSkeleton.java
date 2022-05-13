@@ -1,10 +1,13 @@
 package io.unity.classutilities;
 
+import org.apache.commons.io.FileExistsException;
+import org.apache.commons.io.FileUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.pmw.tinylog.Logger;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.*;
@@ -62,7 +65,7 @@ public class ClassSkeleton {
             Logger.error(e);
         }
 
-        System.out.println("=================> " + destination_path);
+        System.out.println("Class File Generated =================> " + destination_path);
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         int result = compiler.run(null, null, null,
                 destination_path);
@@ -73,15 +76,22 @@ public class ClassSkeleton {
     public void move_file(String java_file) {
 
         String source_class_file = java_file.replace(".java", ".class");
-        String destination_file_path = source_class_file.replace("/src/test/java", "/target/test-classes");
+
+        String target_file_path_replace = FileSystems.getDefault().getSeparator()+"src"+FileSystems.getDefault().getSeparator()+"test"+FileSystems.getDefault().getSeparator()+"java";
+        String destination_file_path_replace = FileSystems.getDefault().getSeparator()+"target"+FileSystems.getDefault().getSeparator()+"test-classes";
+        String destination_file_path = source_class_file.replace(target_file_path_replace, destination_file_path_replace);
 
 
         Path temp = null;
         try {
-            temp = Files.move
-                    (Paths.get(source_class_file),
-                            Paths.get(destination_file_path));
-        } catch (FileAlreadyExistsException e) {
+
+            //temp = Files.move(Paths.get(source_class_file), Paths.get(destination_file_path), StandardCopyOption.REPLACE_EXISTING);
+
+         //   temp = Files.move(new File(source_class_file).toPath(), new File(destination_file_path).toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            FileUtils.moveFile(new File(source_class_file), new File(destination_file_path));
+
+        } catch (FileExistsException e) {
             try {
                 Files.delete(Paths.get(source_class_file));
             } catch (IOException ex) {
@@ -89,12 +99,17 @@ public class ClassSkeleton {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }catch (Exception e)
+        {e.printStackTrace();}
 
         if (temp != null) {
             System.out.println("File renamed and moved successfully");
         } else {
-            
+
+            File file = new File(Paths.get(destination_file_path).toString());
+            if(!file.exists()) {
+                throw new RuntimeException("File Not Moved ");
+            }
         }
     }
 
