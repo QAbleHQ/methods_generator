@@ -10,7 +10,10 @@ import javax.tools.ToolProvider;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class ClassSkeleton {
 
@@ -20,15 +23,24 @@ public class ClassSkeleton {
         this.java_class = java_class;
     }
 
-    public String get_package_name(String destination_path) {
-        String package_path = destination_path.replace(FileSystems.getDefault().getSeparator() ,".");
-        return "web.object_repository" + package_path.split("web.object_repository")[1];
+    public String get_package_name(String destination_path, String type) {
+        String package_path = destination_path.replace(FileSystems.getDefault().getSeparator(), ".");
+        String package_name = "";
+        if (type.equals("web")) {
+            package_name = "web.object_repository" + package_path.split("web.object_repository")[1];
+        }
+        if (type.equals("mobile")) {
+            package_name = "mobile.object_repository" + package_path.split("mobile.object_repository")[1];
+
+        }
+
+        return package_name;
     }
 
 
-    public void create_skeleton(String destination_path, String className) {
+    public void create_skeleton(String destination_path, String className, String type) {
 
-        String package_name = get_package_name(destination_path);
+        String package_name = get_package_name(destination_path, type);
         Logger.info("Setting up the package name :" + package_name);
         java_class.setPackage(package_name).setName(className);
 
@@ -77,8 +89,8 @@ public class ClassSkeleton {
 
         String source_class_file = java_file.replace(".java", ".class");
 
-        String target_file_path_replace = FileSystems.getDefault().getSeparator()+"src"+FileSystems.getDefault().getSeparator()+"test"+FileSystems.getDefault().getSeparator()+"java";
-        String destination_file_path_replace = FileSystems.getDefault().getSeparator()+"target"+FileSystems.getDefault().getSeparator()+"test-classes";
+        String target_file_path_replace = FileSystems.getDefault().getSeparator() + "src" + FileSystems.getDefault().getSeparator() + "test" + FileSystems.getDefault().getSeparator() + "java";
+        String destination_file_path_replace = FileSystems.getDefault().getSeparator() + "target" + FileSystems.getDefault().getSeparator() + "test-classes";
         String destination_file_path = source_class_file.replace(target_file_path_replace, destination_file_path_replace);
 
 
@@ -87,7 +99,7 @@ public class ClassSkeleton {
 
             //temp = Files.move(Paths.get(source_class_file), Paths.get(destination_file_path), StandardCopyOption.REPLACE_EXISTING);
 
-         //   temp = Files.move(new File(source_class_file).toPath(), new File(destination_file_path).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            //   temp = Files.move(new File(source_class_file).toPath(), new File(destination_file_path).toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             FileUtils.moveFile(new File(source_class_file), new File(destination_file_path));
 
@@ -99,15 +111,16 @@ public class ClassSkeleton {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (Exception e)
-        {e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (temp != null) {
             System.out.println("File renamed and moved successfully");
         } else {
 
             File file = new File(Paths.get(destination_file_path).toString());
-            if(!file.exists()) {
+            if (!file.exists()) {
                 throw new RuntimeException("File Not Moved ");
             }
         }

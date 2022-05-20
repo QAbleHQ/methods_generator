@@ -18,10 +18,10 @@ public class EntryPoint {
     public static void main(String[] args) {
 
         EntryPoint generator = new EntryPoint();
-        generator.generate();
+        generator.generate("mobile");
     }
 
-    public void generate() {
+    public void generate(String type) {
 
         Configurator.currentConfig()
                 .formatPattern("{level}:{message}")
@@ -55,7 +55,7 @@ public class EntryPoint {
                         javaClass = Roaster.create(JavaClassSource.class);
                         skeleton = new ClassSkeleton(javaClass);
                         Logger.info("Creating a Java class with the name :" + only_class_name);
-                        skeleton.create_skeleton(file_path, only_class_name);
+                        skeleton.create_skeleton(file_path, only_class_name,type);
                         skeleton.write_java_file(java_class_file_path, javaClass);
 
                     } else {
@@ -68,7 +68,7 @@ public class EntryPoint {
                     }
 
                     methods = new GenerateMethods(javaClass);
-                    methods.generate_missing_methods(json_file_path, skeleton.get_package_name(file_path) + "." + only_class_name);
+                    methods.generate_missing_methods(json_file_path, skeleton.get_package_name(file_path,type) + "." + only_class_name);
                     skeleton.write_java_file(java_class_file_path, javaClass);
 
 
